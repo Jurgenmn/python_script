@@ -57,11 +57,18 @@ def delete_employee_from_csv(file_name, name):
         
 
     return count_employee
-            
 
+
+def count_employee(file_name):
+    file = read_file(file_name)
+    count = 0
+    for employee in file:
+        count += 1
+
+    return count
 
 def main():
-    option = input("1- Search by department\n2- Search by date\n3- Add new employ\n4- Delete employee : ")
+    option = input("1- Search by department\n2- Search by date\n3- Add new employ\n4- Delete employee\n5- Count employees\n: ")
     if option == "1":
         department = input("Department name: ")
         result = search_by_dep("employees.csv", department)
@@ -83,6 +90,11 @@ def main():
     if option == "4":
         employee = input("Name: ")
         print(delete_employee_from_csv("employees.csv", employee))
+
+
+    if option == "5":
+        print("Number of employees:", count_employee("employees.csv"))
+
 
 
 
