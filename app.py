@@ -10,7 +10,7 @@ def read_file(file_name):
     file = open(file_name, "r")
     rows_of_file = csv.reader(file, delimiter=",")
 
-    return rows_of_file
+    return list(rows_of_file)
 
 
 
@@ -45,11 +45,23 @@ def write_employee_to_csv(file_name, name, surname, dpt, sdate):
     #columns = [name, surname, dpt, sdate]
     speamwriter.writerow([name, surname, dpt, sdate]) #takes a list
 
+def delete_employee_from_csv(file_name, name):
+    rows_of_file = read_file(file_name)
+    count_employee = 0
+    file = open(file_name, "w")
+    speamwriter = csv.writer(file, delimiter=",")
+    for row in rows_of_file:
+        if row[0] != name:
+            speamwriter.writerow(row)
+            count_employee += 1
+        
 
+    return count_employee
+            
 
 
 def main():
-    option = input("1- Search by department\n2- Search by date\n3- Add new employ\n: ")
+    option = input("1- Search by department\n2- Search by date\n3- Add new employ\n4- Delete employee : ")
     if option == "1":
         department = input("Department name: ")
         result = search_by_dep("employees.csv", department)
@@ -67,6 +79,13 @@ def main():
         employee_dpt = input("Department :")
         employee_start_date = input("Start date ex:2020-04-26 :")
         write_employee_to_csv("employees.csv", employee_name, employee_surname, employee_dpt, employee_start_date)
+
+    if option == "4":
+        employee = input("Name: ")
+        print(delete_employee_from_csv("employees.csv", employee))
+
+
+
 
 
 
