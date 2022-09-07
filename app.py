@@ -61,14 +61,38 @@ def delete_employee_from_csv(file_name, name):
 
 def count_employee(file_name):
     file = read_file(file_name)
+    #return len(file)
     count = 0
     for employee in file:
         count += 1
 
     return count
 
+
+def update_employee(file_name, employee_name, column_idx, new_value):
+    rows = read_file(file_name)
+    for employee in rows:
+        if employee[0] == employee_name:
+            employee[column_idx] = new_value
+
+    file = open(file_name, "w")
+    speamwriter = csv.writer(file, delimiter=",")
+    for row in rows:
+            speamwriter.writerow(row)     
+
+
+
+
 def main():
-    option = input("1- Search by department\n2- Search by date\n3- Add new employ\n4- Delete employee\n5- Count employees\n: ")
+    option = input("""
+            1- Search by department
+            2- Search by date
+            3- Add new employee
+            4- Delete employee
+            5- Count employees
+            6- Update employee
+            :
+            """)
     if option == "1":
         department = input("Department name: ")
         result = search_by_dep("employees.csv", department)
@@ -95,10 +119,11 @@ def main():
     if option == "5":
         print("Number of employees:", count_employee("employees.csv"))
 
-
-
-
-
+    if option == "6":
+        emp_name = input("Name: ")
+        column_idx = int(input("Column index: "))
+        new_value = input("New value: ")
+        update_employee("employees.csv", emp_name, column_idx, new_value)
 
 
 main()
