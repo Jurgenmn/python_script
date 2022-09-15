@@ -45,13 +45,13 @@ def write_employee_to_csv(file_name, name, surname, dpt, sdate):
     #columns = [name, surname, dpt, sdate]
     speamwriter.writerow([name, surname, dpt, sdate]) #takes a list
 
-def delete_employee_from_csv(file_name, name):
+def delete_employee_from_csv(file_name, id):
     rows_of_file = read_file(file_name)
     count_employee = 0
     file = open(file_name, "w")
     speamwriter = csv.writer(file, delimiter=",")
     for row in rows_of_file:
-        if row[0] != name:
+        if row[0] != id:
             speamwriter.writerow(row)
             count_employee += 1
         
@@ -69,12 +69,12 @@ def count_employee(file_name):
     return count
 
 
-def update_employee(file_name, employee_name, column_idx, new_value):
+def update_employee(file_name, employee_id, column_idx, new_value):
     rows = read_file(file_name)
     file = open(file_name, "w")
     speamwriter = csv.writer(file, delimiter=",")
     for employee in rows:
-        if employee[0] == employee_name:
+        if employee[0] == employee_id:
             employee[column_idx] = new_value
 
         speamwriter.writerow(employee) 
@@ -111,7 +111,7 @@ def main():
         write_employee_to_csv("employees.csv", employee_name, employee_surname, employee_dpt, employee_start_date)
 
     if option == "4":
-        employee = input("Name: ")
+        employee = input("id: ")
         print(delete_employee_from_csv("employees.csv", employee))
 
 
@@ -119,10 +119,13 @@ def main():
         print("Number of employees:", count_employee("employees.csv"))
 
     if option == "6":
-        emp_name = input("Name: ")
-        column_idx = int(input("Column index: "))
+        emp_id = input("Id: ")
+        print("ex: Name, Surname, Department, Start date")
+        column_name = input("Column name: ")
+        columns = {"Name": 1, "Surname": 2, "Department": 3, "Start date": 4}
+        column_idx = columns[column_name]
         new_value = input("New value: ")
-        update_employee("employees.csv", emp_name, column_idx, new_value)
+        update_employee("employees.csv", emp_id, column_idx, new_value)
 
 
 main()
