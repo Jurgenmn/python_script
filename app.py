@@ -71,14 +71,13 @@ def count_employee(file_name):
 
 def update_employee(file_name, employee_name, column_idx, new_value):
     rows = read_file(file_name)
+    file = open(file_name, "w")
+    speamwriter = csv.writer(file, delimiter=",")
     for employee in rows:
         if employee[0] == employee_name:
             employee[column_idx] = new_value
 
-    file = open(file_name, "w")
-    speamwriter = csv.writer(file, delimiter=",")
-    for row in rows:
-            speamwriter.writerow(row)     
+        speamwriter.writerow(employee) 
 
 
 
